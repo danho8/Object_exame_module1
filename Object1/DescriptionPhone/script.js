@@ -1,38 +1,45 @@
 class Mobile {
   constructor() {
-    this.battery = 100;
-    this.draft = "";
-    this.inbox = [];
-    this.sent = [];
-    this.status = false;
+    this.battery = 100; // trạng thái pin tính bằng đơn vị số nguyên (tối đa 100 đv).
+    this.draft = ""; // tin nhắn nháp
+    this.inbox = []; // hộp thư đến
+    this.sent = []; // hộp thư đi
+    this.status = false; // trạng thái máy (on/off)
   }
   checkStatus() {
+    // kiểm tra trạng thái máy
     return this.status;
   }
   turnOn() {
+    // bật máy
     this.status = true;
   }
   turnOff() {
     this.status = false;
   }
   charge() {
+    // sạc pin
     this.battery = 100;
   }
   writeDraft(content) {
+    // viết tin nhắn nháp
     if (this.checkStatus()) {
       this.draft = content;
       this.battery--;
     }
   }
   receiveMessage(message) {
+    // nhận tin nhắn
     if (this.checkStatus()) {
-      this.inbox.push(message);
+      // kiểm tra trạng thái máy
+      this.inbox.push(message); // thêm tin nhắn vào hộp thư đến
       this.battery--;
     }
   }
   sendMessage(mobile) {
+    // gửi tin nhắn
     if (this.checkStatus()) {
-      mobile.receiveMessage(this.draft);
+      mobile.receiveMessage(this.draft); // gửi tin nhắn đến
       this.sent.push(this.draft);
       this.draft = "";
       this.battery--;
@@ -41,7 +48,7 @@ class Mobile {
   viewInbox() {
     if (this.checkStatus()) {
       this.battery--;
-      return this.inbox;
+      return this.inbox; // trả về hộp thư đến
     }
   }
   viewSent() {
